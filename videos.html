@@ -1,199 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Videos — GM Studio</title>
   <link rel="stylesheet" href="css/style.css" />
+  <script src="js/config.js"></script>
+  <script src="js/components.js"></script>
+  <style>
+    .video-modal { position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center; }
+    .video-modal.open { display:flex; }
+    .video-modal-inner { position:relative;width:90vw;max-width:960px; }
+    .video-modal-inner video { width:100%;border:1px solid var(--border);display:block; }
+    .video-modal-close { position:absolute;top:-44px;right:0;color:var(--text-muted);font-size:2rem;cursor:pointer;line-height:1;transition:color .2s; }
+    .video-modal-close:hover { color:var(--accent); }
+    .video-thumb { cursor:pointer; }
+  </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html" class="nav-logo">GM <span>Studio</span></a>
-    <ul class="nav-links">
-      <li><a href="portfolio.html">Portfolio</a></li>
-      <li><a href="videos.html">Videos</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <button class="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+  <div id="header-placeholder"></div>
 
-  <div class="mobile-menu">
-    <a href="portfolio.html">Portfolio</a>
-    <a href="videos.html">Videos</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </div>
-
-  <!-- PAGE HERO -->
   <div class="page-hero">
-    <div class="section-label">Motion stories</div>
+    <span class="section-label">Motion stories</span>
     <h1>Videos<em>.</em></h1>
     <p>Films &middot; BTS &middot; Reels &middot; Timelapses</p>
   </div>
 
-  <!-- FEATURED VIDEO -->
+  <!-- Featured video -->
   <section style="background:var(--bg-2);">
-    <div class="section-label">Featured film</div>
-    <h2 class="section-title" data-reveal>Mumbai — <em>A City Breathes</em></h2>
+    <span class="section-label">Featured film</span>
+    <h2 class="section-title" data-reveal id="featured-title">Mumbai — <em>A City Breathes</em></h2>
     <div class="divider"></div>
-    <div style="margin-top:40px; position:relative; aspect-ratio:16/9; background:var(--bg-3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; max-width:900px; cursor:pointer;" data-reveal>
-      <div style="text-align:center;">
-        <div class="play-btn" style="margin:0 auto 16px; width:72px; height:72px; font-size:1.6rem;">▶</div>
-        <p style="color:var(--text-muted); font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;">Embed your YouTube / Vimeo iframe here</p>
-        <p style="color:var(--accent); font-size:.72rem; margin-top:6px;">Replace this div with: &lt;iframe src="your-video-url" ...&gt;&lt;/iframe&gt;</p>
+    <div style="margin-top:36px;max-width:900px;" data-reveal>
+      <div id="featured-player" style="position:relative;aspect-ratio:16/9;background:var(--bg-3);border:1px solid var(--border);overflow:hidden;cursor:pointer;">
+        <img id="featured-poster" src="" alt="Featured video" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+          <div class="play-btn" style="width:72px;height:72px;font-size:1.4rem;">&#9654;</div>
+        </div>
       </div>
+      <p id="featured-desc" style="margin-top:14px;color:var(--text-muted);font-size:.82rem;line-height:1.75;"></p>
     </div>
-    <p style="margin-top:16px;color:var(--text-muted);font-size:.82rem;max-width:600px;line-height:1.7;">
-      A 4-minute cinematic journey through the streets, coastlines, and rooftops of Mumbai — shot over six months across every season the city offers.
-    </p>
   </section>
 
-  <!-- VIDEO GRID -->
+  <!-- Video grid -->
   <section>
-    <div class="section-label">All videos</div>
+    <span class="section-label">All videos</span>
     <h2 class="section-title" data-reveal>Watch the <em>collection</em></h2>
-
-    <div class="videos-grid" style="margin-top:48px;">
-
-      <div class="video-card" data-reveal>
-        <div class="video-thumb">
-          <div class="video-thumb-placeholder">
-            <div class="play-btn">▶</div>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3>Sahyadri — Golden Hour</h3>
-          <p>A cinematic drive through the misty Western Ghats as the sun dips below the ridgeline.</p>
-          <span class="video-tag">Landscape</span>
-        </div>
-      </div>
-
-      <div class="video-card" data-reveal>
-        <div class="video-thumb">
-          <div class="video-thumb-placeholder">
-            <div class="play-btn">▶</div>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3>Anjali & Rohit — Wedding Film</h3>
-          <p>A beautifully intimate wedding short from a beachside ceremony in Alibaug.</p>
-          <span class="video-tag">Wedding</span>
-        </div>
-      </div>
-
-      <div class="video-card" data-reveal>
-        <div class="video-thumb">
-          <div class="video-thumb-placeholder">
-            <div class="play-btn">▶</div>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3>Dharavi in 60 Seconds</h3>
-          <p>A one-minute burst of colour, motion, and life from inside Asia's largest informal settlement.</p>
-          <span class="video-tag">Street</span>
-        </div>
-      </div>
-
-      <div class="video-card" data-reveal>
-        <div class="video-thumb">
-          <div class="video-thumb-placeholder">
-            <div class="play-btn">▶</div>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3>Studio BTS — Watch Campaign</h3>
-          <p>Behind the scenes of a luxury timepiece shoot: lighting, angles, and every small detail.</p>
-          <span class="video-tag">BTS</span>
-        </div>
-      </div>
-
-      <div class="video-card" data-reveal>
-        <div class="video-thumb">
-          <div class="video-thumb-placeholder">
-            <div class="play-btn">▶</div>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3>Monsoon Timelapse — Marine Drive</h3>
-          <p>6 hours of Mumbai's rainy season compressed into 90 seconds of drama.</p>
-          <span class="video-tag">Timelapse</span>
-        </div>
-      </div>
-
-      <div class="video-card" data-reveal>
-        <div class="video-thumb">
-          <div class="video-thumb-placeholder">
-            <div class="play-btn">▶</div>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3>How I Edit My Street Shots</h3>
-          <p>A candid walkthrough of my Lightroom workflow for high-contrast urban photography.</p>
-          <span class="video-tag">Tutorial</span>
-        </div>
-      </div>
-
-    </div>
-
-    <p style="text-align:center;color:var(--text-muted);font-size:.78rem;margin-top:48px;letter-spacing:.08em;">
-      💡 Add your YouTube or Vimeo embed inside each <code style="color:var(--accent)">.video-thumb</code> div to activate the videos.
-    </p>
+    <div class="videos-grid" id="video-grid"></div>
   </section>
 
-  <!-- CTA -->
   <div class="cta-strip">
     <h2>Need a <em>cinematic film</em> for your event?</h2>
-    <p>I produce wedding films, brand documentaries, and travel reels with the same eye I bring to photography.</p>
+    <p>We produce wedding films, brand docs, and travel reels with the same eye we bring to photography.</p>
     <a href="contact.html" class="btn btn-solid">Let's talk video</a>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo">GM <span>Studio</span></div>
-        <p class="footer-about">Mumbai-based photography & film studio available for commissions worldwide.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navigate</h4>
-        <ul>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="videos.html">Videos</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Video Types</h4>
-        <ul>
-          <li><a href="#">Wedding Films</a></li>
-          <li><a href="#">Brand Docs</a></li>
-          <li><a href="#">Timelapses</a></li>
-          <li><a href="#">Tutorials</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:hello@gmstudio.in">hello@gmstudio.in</a></li>
-          <li><a href="tel:+919876543210">+91 98765 43210</a></li>
-        </ul>
-      </div>
+  <div id="footer-placeholder"></div>
+
+  <!-- Video modal -->
+  <div class="video-modal" id="video-modal">
+    <div class="video-modal-inner">
+      <span class="video-modal-close" id="video-modal-close">&times;</span>
+      <video id="modal-video" controls preload="none"></video>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 GM Studio</span>
-      <div class="social-links">
-        <a href="#" aria-label="Instagram">📷</a>
-        <a href="#" aria-label="YouTube">▶️</a>
-        <a href="#" aria-label="LinkedIn">💼</a>
-      </div>
-    </div>
-  </footer>
+  </div>
 
   <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal    = document.getElementById('video-modal');
+      const modalVid = document.getElementById('modal-video');
+      const closeBtn = document.getElementById('video-modal-close');
+
+      function openVideo(url) {
+        modalVid.src = url;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        modalVid.play().catch(() => {});
+      }
+      function closeVideo() {
+        modal.classList.remove('open');
+        modalVid.pause();
+        modalVid.src = '';
+        document.body.style.overflow = '';
+      }
+      closeBtn.addEventListener('click', closeVideo);
+      modal.addEventListener('click', e => { if (e.target === modal) closeVideo(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
+
+      // Featured
+      const fv = GM.videos.featured;
+      const fp = document.getElementById('featured-poster');
+      const fd = document.getElementById('featured-desc');
+      if (fp) fp.src = GM.asset(fv.poster);
+      if (fd) fd.textContent = fv.desc;
+      document.getElementById('featured-player').addEventListener('click', () => openVideo(GM.asset(fv.file)));
+
+      // Grid
+      const grid = document.getElementById('video-grid');
+      ['v1','v2','v3','v4','v5'].forEach(k => {
+        const v = GM.videos[k];
+        if (!v) return;
+        const url = GM.asset(v.file);
+        const poster = GM.asset(v.poster);
+        grid.innerHTML += `
+          <div class="video-card" data-reveal>
+            <div class="video-thumb" onclick="document.getElementById('modal-video').src='${url}';document.getElementById('video-modal').classList.add('open');document.body.style.overflow='hidden';document.getElementById('modal-video').play().catch(()=>{});">
+              <div style="position:relative;width:100%;height:100%;background:var(--bg-3);">
+                <img src="${poster}" alt="${v.title}" loading="lazy"
+                  style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"
+                  onerror="this.style.display='none'" />
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div class="play-btn">&#9654;</div>
+                </div>
+              </div>
+            </div>
+            <div class="video-info">
+              <h3>${v.title}</h3>
+              <p>${v.desc}</p>
+              <span class="video-tag">${v.tag}</span>
+            </div>
+          </div>`;
+      });
+    });
+  </script>
 </body>
 </html>
